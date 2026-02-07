@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/webapp/WEB-INF/views/admin/dashboard.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/admin/reservations_manage.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/admin/rooms_manage.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/admin/users_manage.jsp=UTF-8
@@ -6,6 +7,7 @@ encoding//src/main/webapp/WEB-INF/views/common/footer.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/public/availability.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/public/home.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/public/login.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/public/register.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/public/rooms.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/staff/dashboard.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/staff/reports.jsp=UTF-8

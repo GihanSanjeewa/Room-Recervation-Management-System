@@ -3,6 +3,26 @@
 
 <div class="container py-5">
   <h5 class="section-title">STAFF REPORTS</h5>
+  
+  <form class="row g-2 align-items-end border rounded-4 p-3 mt-3"
+	      method="get" action="<c:url value='/staff/reports'/>">
+	  <div class="col-12 col-md-4">
+	    <label class="form-label small muted">From</label>
+	    <input type="date" name="from" class="form-control" value="${from}" required>
+	  </div>
+	  <div class="col-12 col-md-4">
+	    <label class="form-label small muted">To</label>
+	    <input type="date" name="to" class="form-control" value="${to}" required>
+	  </div>
+	  <div class="col-12 col-md-4 d-grid">
+	    <button class="btn btn-gold">Apply Filter</button>
+	  </div>
+	</form>
+	
+	<div class="mt-3 muted">
+	  Showing results from <strong>${from}</strong> to <strong>${to}</strong>
+	</div>
+	  
 
   <div class="row g-3 mt-2">
     <div class="col-md-3"><div class="p-3 border rounded-4"><div class="muted">Total</div><h4>${summary.totalReservations}</h4></div></div>

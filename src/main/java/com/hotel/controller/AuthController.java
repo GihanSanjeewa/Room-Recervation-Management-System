@@ -68,9 +68,10 @@ public class AuthController extends HttpServlet {
             session.setAttribute("authUser", user);
 
             // redirect by role
-            if ("ADMIN".equals(user.getRole())) resp.sendRedirect(req.getContextPath() + "/staff/dashboard");
+            if ("ADMIN".equals(user.getRole())) resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
             else if ("STAFF".equals(user.getRole())) resp.sendRedirect(req.getContextPath() + "/staff/dashboard");
             else resp.sendRedirect(req.getContextPath() + "/home");
+
         }
     }
 }

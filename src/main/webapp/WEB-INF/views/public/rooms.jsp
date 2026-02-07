@@ -10,17 +10,17 @@
       <div class="col-md-6 col-lg-4">
         <div class="card card-room">
 
-          <div id="carousel-${r.id}" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner" style="height:190px;">
-              <c:forEach var="img" items="${r.images}" varStatus="st">
-                <div class="carousel-item ${st.index==0 ? 'active' : ''}">
-                  <img src="<c:url value='${img.imageUrl}'/>"
-                       class="d-block w-100"
-                       style="height:190px;object-fit:cover;">
-                </div>
-              </c:forEach>
-            </div>
-          </div>
+          <div class="room-img-frame">
+		    <div id="carousel-${r.id}" class="carousel slide" data-bs-ride="carousel">
+		      <div class="carousel-inner">
+		        <c:forEach var="img" items="${r.images}" varStatus="st">
+		          <div class="carousel-item ${st.index==0 ? 'active' : ''}">
+		            <img src="<c:url value='${img.imageUrl}'/>" class="d-block w-100" style="height:210px;object-fit:cover;">
+		          </div>
+		        </c:forEach>
+		      </div>
+		    </div>
+		  </div>
 
           <div class="card-body">
             <h5 class="card-title mb-1">Room ${r.roomNumber} ${r.type}</h5>
