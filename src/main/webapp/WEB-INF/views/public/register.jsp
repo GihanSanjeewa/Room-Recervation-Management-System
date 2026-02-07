@@ -12,21 +12,21 @@
       </p>
 
       <div class="auth-feature">
-        <div class="icon">⌂</div>
+        <div class="icon"></div>
         <div>
           <div class="fw-bold">Smart availability</div>
           <div style="opacity:.9">Search rooms by dates and guests.</div>
         </div>
       </div>
       <div class="auth-feature">
-        <div class="icon">✦</div>
+        <div class="icon"></div>
         <div>
           <div class="fw-bold">Elegant stays</div>
           <div style="opacity:.9">Comfortable interiors and service.</div>
         </div>
       </div>
       <div class="auth-feature">
-        <div class="icon">✓</div>
+        <div class="icon"></div>
         <div>
           <div class="fw-bold">Instant booking</div>
           <div style="opacity:.9">Reservations are instantly confirmed as Reserved.</div>

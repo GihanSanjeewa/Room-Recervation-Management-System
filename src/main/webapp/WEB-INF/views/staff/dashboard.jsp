@@ -28,7 +28,7 @@
             <c:forEach var="r" items="${allReservations}" begin="0" end="7">
               <tr>
                 <td class="fw-semibold">${r.reservationCode}</td>
-                <td>${r.roomNumber} • ${r.roomType}</td>
+                <td>${r.roomNumber} ${r.roomType}</td>
                 <td>${r.checkIn}</td>
                 <td>${r.checkOut}</td>
                 <td><span class="badge ${r.status=='RESERVED'?'text-bg-success':'text-bg-secondary'}">${r.status}</span></td>

@@ -13,21 +13,21 @@
       </p>
 
       <div class="auth-feature">
-        <div class="icon">★</div>
+        <div class="icon"></div>
         <div>
           <div class="fw-bold">Luxury stays</div>
           <div style="opacity:.9">Elegant rooms and premium comfort.</div>
         </div>
       </div>
       <div class="auth-feature">
-        <div class="icon">⚡</div>
+        <div class="icon"></div>
         <div>
           <div class="fw-bold">Instant confirmation</div>
           <div style="opacity:.9">Your reservation becomes Reserved immediately.</div>
         </div>
       </div>
       <div class="auth-feature">
-        <div class="icon">✓</div>
+        <div class="icon"></div>
         <div>
           <div class="fw-bold">Secure access</div>
           <div style="opacity:.9">Role-based dashboards for staff and admin.</div>
@@ -61,7 +61,7 @@
         <button class="btn btn-lux w-100">Login</button>
 
         <div class="mini-note mt-3">
-          Don’t have an account?
+          Dont have an account?
           <a href="<c:url value='/register'/>">Create one</a>
         </div>
 

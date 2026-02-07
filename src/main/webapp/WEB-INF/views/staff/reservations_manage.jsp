@@ -26,7 +26,7 @@
               <select class="form-select form-select-sm" name="roomId">
                 <c:forEach var="rm" items="${rooms}">
                   <option value="${rm.id}" ${rm.id==r.roomId ? "selected" : ""}>
-                    ${rm.roomNumber} • ${rm.type}
+                    ${rm.roomNumber} ${rm.type}
                   </option>
                 </c:forEach>
               </select>
