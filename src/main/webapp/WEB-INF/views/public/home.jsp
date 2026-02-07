@@ -1,13 +1,18 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <section class="hero">
   <div class="container">
-    <div class="lux-badge">JAKARTA • CITY LUXURY</div>
+    <div class="lux-badge"> CITY LUXURY</div>
     <h1 class="mt-2">Experience timeless comfort by the ocean</h1>
     <p class="mt-3">
       Discover elegant rooms, premium service, and a smooth booking experience built with MVC architecture.
     </p>
 
+
+<div class="small text-danger">
+  images count: ${fn:length(r.images)}
+</div>
     <div class="booking-bar">
       <form class="row g-2 align-items-end" action="<c:url value='/availability'/>" method="get">
         <div class="col-12 col-md-3">

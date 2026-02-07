@@ -12,6 +12,39 @@
   <c:if test="${not empty error}">
     <div class="alert alert-danger">${error}</div>
   </c:if>
+  
+  <c:if test="${not empty room && not empty room.images}">
+  <div class="col-12">
+    <label class="form-label">Current Images</label>
+    <div class="row g-3">
+      <c:forEach var="img" items="${room.images}">
+        <div class="col-6 col-md-3">
+          <div class="border rounded-4 p-2">
+            <img src="<c:url value='${img.imageUrl}'/>" style="width:100%;height:120px;object-fit:cover;border-radius:12px;">
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <c:if test="${img.cover}">
+                <span class="badge text-bg-warning">Cover</span>
+              </c:if>
+              <c:if test="${!img.cover}">
+                <form method="post" action="<c:url value='/admin/rooms/image/set-cover'/>">
+                  <input type="hidden" name="imageId" value="${img.id}">
+                  <button class="btn btn-sm btn-outline-dark">Set Cover</button>
+                </form>
+              </c:if>
+            </div>
+
+            <form class="mt-2" method="post" action="<c:url value='/admin/rooms/image/delete'/>"
+                  onsubmit="return confirm('Delete this image?');">
+              <input type="hidden" name="imageId" value="${img.id}">
+              <button class="btn btn-sm btn-outline-danger w-100">Delete</button>
+            </form>
+          </div>
+        </div>
+      </c:forEach>
+    </div>
+  </div>
+</c:if>
+  
 
   <div class="border rounded-4 p-4">
     <form method="post"
@@ -20,7 +53,7 @@
 
       <c:if test="${not empty room}">
         <input type="hidden" name="id" value="${room.id}">
-      </c:if>
+      </c:if> 
 
       <div class="row g-3">
         <div class="col-md-3">

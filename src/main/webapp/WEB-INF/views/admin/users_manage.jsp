@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <div class="container py-5">
-  <h5 class="section-title">ADMIN • MANAGE USERS & STAFF</h5>
+  <h5 class="section-title">ADMIN MANAGE USERS & STAFF</h5>
   <p class="muted">Change roles (USER/STAFF/ADMIN) and block/unblock accounts.</p>
 
   <div class="table-responsive border rounded-4 p-2 mt-3">

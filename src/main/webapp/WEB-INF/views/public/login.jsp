@@ -23,9 +23,7 @@
       </div>
       <button class="btn btn-gold w-100">Login</button>
     </form>
-    <div class="small muted mt-3">
-      Admin: admin@hotel.com / admin123 • Staff: staff@hotel.com / staff123
-    </div>
+   
   </div>
 </div>
 

@@ -16,7 +16,7 @@
       <c:forEach var="r" items="${allReservations}">
         <tr>
           <td class="fw-semibold">${r.reservationCode}</td>
-          <td>${r.roomNumber} • ${r.roomType}</td>
+          <td>${r.roomNumber} ${r.roomType}</td>
           <td>${r.checkIn}</td>
           <td>${r.checkOut}</td>
           <td>${r.guests}</td>

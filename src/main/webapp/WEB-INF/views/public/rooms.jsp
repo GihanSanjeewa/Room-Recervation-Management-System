@@ -23,8 +23,8 @@
           </div>
 
           <div class="card-body">
-            <h5 class="card-title mb-1">Room ${r.roomNumber} • ${r.type}</h5>
-            <div class="muted small">Capacity: ${r.capacity} • Status: ${r.status}</div>
+            <h5 class="card-title mb-1">Room ${r.roomNumber} ${r.type}</h5>
+            <div class="muted small">Capacity: ${r.capacity} Status: ${r.status}</div>
             <p class="mt-2 muted">${r.description}</p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="price">LKR ${r.pricePerNight}</div>

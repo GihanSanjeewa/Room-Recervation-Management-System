@@ -3,7 +3,7 @@
 
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center">
-    <h5 class="section-title mb-0">ADMIN • MANAGE ROOMS</h5>
+    <h5 class="section-title mb-0">ADMIN MANAGE ROOMS</h5>
     <a class="btn btn-gold" href="<c:url value='/admin/rooms/create'/>">+ Add Room</a>
   </div>
 

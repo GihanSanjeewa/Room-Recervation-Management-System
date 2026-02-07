@@ -73,5 +73,49 @@ public class RoomImageDAO {
             throw new RuntimeException(e);
         }
     }
+    
+    public RoomImage findById(int imageId) {
+        String sql = "SELECT * FROM room_images WHERE id=?";
+        try (var con = com.hotel.util.DBConnection.getConnection();
+             var ps = con.prepareStatement(sql)) {
+            ps.setInt(1, imageId);
+            try (var rs = ps.executeQuery()) {
+                if (!rs.next()) return null;
+                RoomImage img = new RoomImage();
+                img.setId(rs.getInt("id"));
+                img.setRoomId(rs.getInt("room_id"));
+                img.setImageUrl(rs.getString("image_url"));
+                img.setCover(rs.getInt("is_cover") == 1);
+                img.setSortOrder(rs.getInt("sort_order"));
+                return img;
+            }
+        } catch (Exception e) { throw new RuntimeException(e); }
+    }
+
+    public boolean deleteImageById(int imageId) {
+        String sql = "DELETE FROM room_images WHERE id=?";
+        try (var con = com.hotel.util.DBConnection.getConnection();
+             var ps = con.prepareStatement(sql)) {
+            ps.setInt(1, imageId);
+            return ps.executeUpdate() == 1;
+        } catch (Exception e) { throw new RuntimeException(e); }
+    }
+
+    public void setCoverImage(int roomId, int imageId) {
+        try (var con = com.hotel.util.DBConnection.getConnection()) {
+            con.setAutoCommit(false);
+            try (var ps1 = con.prepareStatement("UPDATE room_images SET is_cover=0 WHERE room_id=?")) {
+                ps1.setInt(1, roomId);
+                ps1.executeUpdate();
+            }
+            try (var ps2 = con.prepareStatement("UPDATE room_images SET is_cover=1 WHERE id=? AND room_id=?")) {
+                ps2.setInt(1, imageId);
+                ps2.setInt(2, roomId);
+                ps2.executeUpdate();
+            }
+            con.commit();
+        } catch (Exception e) { throw new RuntimeException(e); }
+    }
+
 
 }

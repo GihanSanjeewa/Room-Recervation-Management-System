@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <div class="container py-5">
-  <h5 class="section-title">STAFF • MANAGE RESERVATIONS</h5>
+  <h5 class="section-title">STAFF MANAGE RESERVATIONS</h5>
 
   <c:if test="${param.updated == '1'}"><div class="alert alert-success">Reservation updated.</div></c:if>
   <c:if test="${param.updated == '0'}"><div class="alert alert-danger">Update failed (conflict or invalid data).</div></c:if>

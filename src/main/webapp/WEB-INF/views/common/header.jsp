@@ -71,6 +71,8 @@
 		    <ul class="dropdown-menu dropdown-menu-end">
 		      <li><a class="dropdown-item" href="<c:url value='/staff/dashboard'/>">Dashboard</a></li>
 		      <li><a class="dropdown-item" href="<c:url value='/staff/reservations'/>">Manage Reservations</a></li>
+		      <li><a class="dropdown-item" href="<c:url value='/staff/reports'/>">Reports</a></li>
+		      
 		    </ul>
 		  </li>
 		<% } %>
@@ -82,6 +84,8 @@
 		      <li><a class="dropdown-item" href="<c:url value='/admin/rooms'/>">Manage Rooms</a></li>
 		      <li><a class="dropdown-item" href="<c:url value='/admin/reservations'/>">Manage Reservations</a></li>
 		      <li><a class="dropdown-item" href="<c:url value='/admin/users'/>">Manage Users/Staff</a></li>
+		      <li><a class="dropdown-item" href="<c:url value='/admin/reports'/>">Reports</a></li>
+		      
 		    </ul>
 		  </li>
 		<% } %>

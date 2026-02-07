@@ -11,7 +11,7 @@
       </div>
     </div>
     <hr style="border-color: rgba(255,255,255,.15)">
-    <small>© 2026 Ocean View Resorts. All rights reserved.</small>
+    <small>2026 Ocean View Resorts. All rights reserved.</small>
   </div>
 </footer>
 

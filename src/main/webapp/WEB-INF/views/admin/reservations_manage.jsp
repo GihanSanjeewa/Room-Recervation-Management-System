@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <div class="container py-5">
-  <h5 class="section-title">ADMIN • MANAGE RESERVATIONS</h5>
+  <h5 class="section-title">ADMIN MANAGE RESERVATIONS</h5>
 
   <c:if test="${param.updated == '1'}"><div class="alert alert-success">Reservation updated.</div></c:if>
   <c:if test="${param.updated == '0'}"><div class="alert alert-danger">Update failed (conflict or invalid data).</div></c:if>
@@ -26,7 +26,7 @@
               <select class="form-select form-select-sm" name="roomId">
                 <c:forEach var="rm" items="${rooms}">
                   <option value="${rm.id}" ${rm.id==r.roomId ? "selected" : ""}>
-                    ${rm.roomNumber} • ${rm.type}
+                    ${rm.roomNumber} ${rm.type}
                   </option>
                 </c:forEach>
               </select>

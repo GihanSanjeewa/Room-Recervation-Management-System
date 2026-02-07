@@ -8,6 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 
 
 public class ReservationDAO {
@@ -200,18 +204,35 @@ public class ReservationDAO {
                     if (rs.next()) { con.rollback(); return false; }
                 }
             }
+            
+         // calculate new total_amount
+            BigDecimal pricePerNight;
+            try (PreparedStatement ps = con.prepareStatement("SELECT price_per_night FROM rooms WHERE id=?")) {
+                ps.setInt(1, newRoomId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next()) { con.rollback(); return false; }
+                    pricePerNight = rs.getBigDecimal(1);
+                }
+            }
+
+            long nights = ChronoUnit.DAYS.between(LocalDate.parse(newCheckIn), LocalDate.parse(newCheckOut));
+            if (nights <= 0) { con.rollback(); return false; }
+
+            BigDecimal newTotal = pricePerNight.multiply(new BigDecimal(nights));
+
 
             // Update reservation
             String upd =
-                    "UPDATE reservations SET room_id=?, check_in=?, check_out=?, guests=? " +
-                    "WHERE id=? AND status='RESERVED'";
+            	    "UPDATE reservations SET room_id=?, check_in=?, check_out=?, guests=?, total_amount=? " +
+            	    "WHERE id=? AND status='RESERVED'";
 
             try (PreparedStatement ps = con.prepareStatement(upd)) {
                 ps.setInt(1, newRoomId);
                 ps.setString(2, newCheckIn);
                 ps.setString(3, newCheckOut);
                 ps.setInt(4, newGuests);
-                ps.setInt(5, reservationId);
+                ps.setBigDecimal(5, newTotal);
+                ps.setInt(6, reservationId);
                 int updated = ps.executeUpdate();
                 if (updated != 1) { con.rollback(); return false; }
             }
