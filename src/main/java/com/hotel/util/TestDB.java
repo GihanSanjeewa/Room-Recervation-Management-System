@@ -1,29 +1,22 @@
 package com.hotel.util;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class TestDB {
-    private static final String URL  = "jdbc:mysql://localhost:3306/hotel_reservation_mvc?useSSL=false&serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PASS = "";
+    public static void main(String[] args) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement("SELECT 1");
+             ResultSet rs = ps.executeQuery()) {
 
-    static {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (Exception e) {
-            throw new RuntimeException("MySQL Driver load failed", e);
-        }
-    }
+            if (rs.next()) {
+                System.out.println("✅ DB Connected! SELECT 1 = " + rs.getInt(1));
+            }
 
-    public static Connection getConnection() {
-        try {
-            return DriverManager.getConnection(URL, USER, PASS);
         } catch (Exception e) {
-            throw new RuntimeException("DB Connection failed", e);
+            System.out.println("❌ DB Connection failed!");
+            e.printStackTrace();
         }
     }
 }
-
-
-
