@@ -2,12 +2,9 @@ package com.hotel.filter;
 
 import com.hotel.model.User;
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.*;
-
 import java.io.IOException;
 
-@WebFilter(filterName = "AuthFilter")
 public class AuthFilter implements Filter {
 
     @Override
@@ -19,7 +16,6 @@ public class AuthFilter implements Filter {
 
         String path = req.getRequestURI().substring(req.getContextPath().length());
 
-        // Public endpoints allowed without login
         boolean isPublic =
                 path.equals("/home") || path.equals("/") ||
                 path.startsWith("/assets/") ||

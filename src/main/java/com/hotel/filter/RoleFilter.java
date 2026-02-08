@@ -2,12 +2,9 @@ package com.hotel.filter;
 
 import com.hotel.model.User;
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.*;
-
 import java.io.IOException;
 
-@WebFilter(filterName = "RoleFilter")
 public class RoleFilter implements Filter {
 
     @Override
