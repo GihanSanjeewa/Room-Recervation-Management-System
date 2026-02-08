@@ -10,6 +10,7 @@
         <welcome-file>home</welcome-file>
     </welcome-file-list>
 
+    <!-- Filter definitions -->
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>com.hotel.filter.AuthFilter</filter-class>
@@ -20,6 +21,7 @@
         <filter-class>com.hotel.filter.RoleFilter</filter-class>
     </filter>
 
+    <!-- Filter mappings -->
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/admin/*</url-pattern>
