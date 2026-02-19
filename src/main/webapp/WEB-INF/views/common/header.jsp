@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="<c:url value='/assets/css/theme.css'/>">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
   
   <style>
     :root{
@@ -42,6 +44,106 @@
     .section-title{ letter-spacing:.12em; font-weight:700; color: var(--lux-dark); }
     .muted{ color: var(--lux-muted); }
     footer{ background: var(--lux-dark); color:#cfe3ef; }
+    
+    
+    /* Navbar modern lux */
+.navbar{
+  background: rgba(11,31,42,.82) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.navbar .navbar-brand{
+  letter-spacing:.18em;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:.55rem;
+}
+
+.navbar .navbar-brand i{
+  color: var(--lux-gold);
+  font-size: 1.2rem;
+}
+
+.navbar .nav-link{
+  display:flex;
+  align-items:center;
+  gap:.45rem;
+  padding: .55rem .85rem !important;
+  border-radius: 999px;
+  transition: .2s ease;
+}
+
+.navbar .nav-link:hover{
+  background: rgba(200,169,126,.14);
+  color: #fff !important;
+}
+
+.navbar .nav-link.active{
+  background: rgba(255,255,255,.10);
+  color:#fff !important;
+}
+
+.navbar .nav-pill{
+  padding: .55rem .95rem !important;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.navbar .nav-pill.gold{
+  background: var(--lux-gold);
+  color: #111 !important;
+}
+
+.navbar .nav-pill.gold:hover{
+  filter: brightness(.95);
+}
+
+.navbar .nav-pill.outline{
+  border: 1px solid rgba(255,255,255,.35);
+  color:#fff !important;
+}
+
+.navbar .nav-pill.outline:hover{
+  border-color: rgba(200,169,126,.9);
+}
+
+/* Dropdown modern */
+.dropdown-menu{
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.14);
+  padding: 8px;
+}
+
+.dropdown-item{
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 600;
+}
+
+.dropdown-item i{
+  margin-right: 8px;
+  opacity: .85;
+}
+
+.dropdown-item:hover{
+  background: rgba(200,169,126,.14);
+}
+
+/* Optional: make collapse menu glass on mobile */
+@media (max-width: 992px){
+  .nav-glass{
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.10);
+    backdrop-filter: blur(10px);
+  }
+}
+    
   </style>
 </head>
 <body>
@@ -50,66 +152,114 @@
   User authUser = null;
   if (session != null) authUser = (User) session.getAttribute("authUser");
 %>
-
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <div class="container">
-    <a class="navbar-brand" href="<c:url value='/home'/>">OCEAN VIEW RESORTS</a>
+    <a class="navbar-brand" href="<c:url value='/home'/>">
+      <i class="bi bi-water"></i> OCEAN VIEW RESORTS
+    </a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="nav">
 
-	  <ul class="navbar-nav ms-auto align-items-lg-center">
-	
-	    <% if (authUser != null) { %>
-	
-	      <li class="nav-item">
-	        <a class="nav-link" href="<c:url value='/my-reservations'/>">My Reservations</a>
-	      </li>
-	
-	      <% if ("STAFF".equals(authUser.getRole())) { %>
-		  <li class="nav-item dropdown">
-		    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Staff Panel</a>
-		    <ul class="dropdown-menu dropdown-menu-end">
-		      <li><a class="dropdown-item" href="<c:url value='/staff/dashboard'/>">Dashboard</a></li>
-		      <li><a class="dropdown-item" href="<c:url value='/staff/reservations'/>">Manage Reservations</a></li>
-		      <li><a class="dropdown-item" href="<c:url value='/staff/reports'/>">Reports</a></li>
-		      
-		    </ul>
-		  </li>
-		<% } %>
-		
-		<% if ("ADMIN".equals(authUser.getRole())) { %>
-		  <li class="nav-item dropdown">
-		    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Admin Panel</a>
-		    <ul class="dropdown-menu dropdown-menu-end">
-		    <li><a class="dropdown-item" href="<c:url value='/admin/dashboard'/>">Dashboard</a></li>
-		      <li><a class="dropdown-item" href="<c:url value='/admin/rooms'/>">Manage Rooms</a></li>
-		      <li><a class="dropdown-item" href="<c:url value='/admin/reservations'/>">Manage Reservations</a></li>
-		      <li><a class="dropdown-item" href="<c:url value='/admin/users'/>">Manage Users/Staff</a></li>
-		      <li><a class="dropdown-item" href="<c:url value='/admin/reports'/>">Reports</a></li>
-		      
-		    </ul>
-		  </li>
-		<% } %>
-	
-	      <li class="nav-item">
-	        <a class="nav-link" href="<c:url value='/logout'/>">Logout</a>
-	      </li>
-	
-	    <% } else { %>
-	
-	      <li class="nav-item">
-	        <a class="nav-link" href="<c:url value='/login'/>">Login</a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="<c:url value='/register'/>">Register</a>
-	      </li>
-	
-	    <% } %>
-	
-	  </ul>
-	
-	</div>
+    <div class="collapse navbar-collapse nav-glass" id="nav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+
+        <% if (authUser != null) { %>
+
+          <li class="nav-item">
+            <a class="nav-link <%= request.getRequestURI().contains("/my-reservations") ? "active" : "" %>"
+               href="<c:url value='/my-reservations'/>">
+              <i class="bi bi-journal-check"></i> My Reservations
+            </a>
+          </li>
+
+          <% if ("STAFF".equals(authUser.getRole())) { %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle"
+                 href="#" role="button" data-bs-toggle="dropdown">
+                <i class="bi bi-person-badge"></i> Staff Panel
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" href="<c:url value='/staff/dashboard'/>">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="<c:url value='/staff/reservations'/>">
+                    <i class="bi bi-journal-text"></i> Manage Reservations
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="<c:url value='/staff/reports'/>">
+                    <i class="bi bi-bar-chart-line"></i> Reports
+                  </a>
+                </li>
+              </ul>
+            </li>
+          <% } %>
+
+          <% if ("ADMIN".equals(authUser.getRole())) { %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle"
+                 href="#" role="button" data-bs-toggle="dropdown">
+                <i class="bi bi-shield-lock"></i> Admin Panel
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" href="<c:url value='/admin/dashboard'/>">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="<c:url value='/admin/rooms'/>">
+                    <i class="bi bi-door-open"></i> Manage Rooms
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="<c:url value='/admin/reservations'/>">
+                    <i class="bi bi-journal-check"></i> Manage Reservations
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="<c:url value='/admin/users'/>">
+                    <i class="bi bi-people"></i> Manage Users/Staff
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="<c:url value='/admin/reports'/>">
+                    <i class="bi bi-bar-chart-line"></i> Reports
+                  </a>
+                </li>
+              </ul>
+            </li>
+          <% } %>
+
+          <li class="nav-item ms-lg-2">
+            <a class="nav-link nav-pill outline" href="<c:url value='/logout'/>">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+          </li>
+
+        <% } else { %>
+
+          <li class="nav-item">
+            <a class="nav-link nav-pill outline" href="<c:url value='/login'/>">
+              <i class="bi bi-person"></i> Login
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link nav-pill gold" href="<c:url value='/register'/>">
+              <i class="bi bi-person-plus"></i> Register
+            </a>
+          </li>
+
+        <% } %>
+
+      </ul>
+    </div>
   </div>
 </nav>
+

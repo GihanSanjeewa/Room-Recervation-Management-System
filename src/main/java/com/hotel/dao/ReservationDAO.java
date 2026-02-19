@@ -244,6 +244,38 @@ public class ReservationDAO {
         }
     }
     
+    public boolean updatePaymentStatus(int reservationId, int userId, String status) {
+        String sql = "UPDATE reservations SET status=? WHERE id=? AND user_id=? AND status='RESERVED'";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, status); // "PAID"
+            ps.setInt(2, reservationId);
+            ps.setInt(3, userId);
+
+            return ps.executeUpdate() == 1;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    
+    public boolean updatePaymentStatusByAdmin(int reservationId, String status) {
+        String sql = "UPDATE reservations SET status=? WHERE id=? AND status='RESERVED'";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, status);
+            ps.setInt(2, reservationId);
+
+            return ps.executeUpdate() == 1;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    
 
 
 }

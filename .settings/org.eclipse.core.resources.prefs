@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/webapp/WEB-INF/views/admin/dashboard.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/admin/reservations_manage.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/admin/room_form.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/admin/rooms_manage.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/admin/users_manage.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/common/footer.jsp=UTF-8

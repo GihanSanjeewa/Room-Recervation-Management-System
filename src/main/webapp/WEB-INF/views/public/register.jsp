@@ -12,21 +12,21 @@
       </p>
 
       <div class="auth-feature">
-        <div class="icon"></div>
+        <div class="icon"><i class="bi bi-emoji-smile"></i></div>
         <div>
           <div class="fw-bold">Smart availability</div>
           <div style="opacity:.9">Search rooms by dates and guests.</div>
         </div>
       </div>
       <div class="auth-feature">
-        <div class="icon"></div>
+        <div class="icon"><i class="bi bi-door-open me-2"></i></div>
         <div>
           <div class="fw-bold">Elegant stays</div>
           <div style="opacity:.9">Comfortable interiors and service.</div>
         </div>
       </div>
       <div class="auth-feature">
-        <div class="icon"></div>
+        <div class="icon"><i class="bi bi-journal-bookmark-fill"></i></div>
         <div>
           <div class="fw-bold">Instant booking</div>
           <div style="opacity:.9">Reservations are instantly confirmed as Reserved.</div>
@@ -44,19 +44,19 @@
 
       <form class="mt-3" method="post" action="<c:url value='/register'/>">
         <div class="mb-3">
-          <label class="form-label">Full Name</label>
-          <input class="form-control auth-input" name="fullName" required>
+          <label class="form-label" style="color:rgb(4,2,0);font-weight:600;">Full Name</label>
+          <input class="form-control auth-input"  name="fullName" required>
         </div>
         <div class="mb-3">
-          <label class="form-label">Email</label>
+          <label class="form-label" style="color:rgb(4,2,0);font-weight:600;">Email</label>
           <input class="form-control auth-input" type="email" name="email" required>
         </div>
         <div class="mb-3">
-          <label class="form-label">Phone</label>
+          <label class="form-label" style="color:rgb(4,2,0);font-weight:600;">Phone</label>
           <input class="form-control auth-input" name="phone">
         </div>
         <div class="mb-3">
-          <label class="form-label">Password</label>
+          <label class="form-label" style="color:rgb(4,2,0);font-weight:600;">Password</label>
           <input class="form-control auth-input" type="password" name="password" required>
         </div>
 
