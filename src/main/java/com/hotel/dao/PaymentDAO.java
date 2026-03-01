@@ -51,7 +51,7 @@ public class PaymentDAO {
                 p.setId(rs.getInt("id"));
                 p.setReservationId(rs.getInt("reservation_id"));
                 p.setAmount(rs.getBigDecimal("amount"));
-                p.setMethod(rs.getInt("method"));
+                p.setMethod(rs.getString("method"));
                 p.setStatus(rs.getString("status"));
                 p.setReference(rs.getString("reference"));
 

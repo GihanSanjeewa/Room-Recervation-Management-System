@@ -88,6 +88,7 @@ public class PaymentController extends HttpServlet {
 
 	      // 4) create payment record (PENDING)
 	      BigDecimal amount = r.getTotalAmount(); // use reservation total
+	      
 	      int paymentId = paymentDAO.createPayment(reservationId, amount, "CARD", "PENDING", "TEMP_REF");
 
 	      // 5) go to payment page (JSP)
