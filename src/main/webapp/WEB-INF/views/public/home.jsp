@@ -115,6 +115,43 @@
     .hero{ padding: 80px 0 120px; }
     .floating{ margin-top: -45px; }
   }
+  
+  .help-box{
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--lux-border);
+  border-radius: 18px;
+  padding: 22px;
+}
+
+.help-box .form-control,
+.help-box .input-group-text{
+  background: rgba(255,255,255,.08);
+  color: var(--lux-text);
+}
+
+.help-box .form-control::placeholder{
+  color: rgba(255,255,255,.55);
+}
+
+.help-box .form-control:focus{
+  box-shadow: none;
+  background: rgba(255,255,255,.10);
+  color: var(--lux-text);
+}
+
+.help-response{
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--lux-border);
+  border-radius: 16px;
+  padding: 18px;
+  color: var(--lux-text);
+  min-height: 80px;
+  white-space: pre-wrap;
+}
+
+.help-loading{
+  color: var(--lux-muted);
+}
 </style>
 
 <section class="hero">
@@ -182,6 +219,7 @@
     </div>
   </div>
 </section>
+
 
 <div class="container floating">
   <div class="glass p-4">
@@ -284,9 +322,136 @@
   </div>
 </div>
 
+
+
+
+<!-- Help Center -->
+<section class="container my-5">
+  <div class="glass p-4 p-md-5" data-aos="fade-up">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-5">
+        <div class="section-title">Help Center</div>
+        <h3 class="fw-bold mb-3">How can we help you today?</h3>
+        <p style="color: var(--lux-muted);">
+          Ask about reservations, check-in, check-out, payments, cancellations, or room availability.
+        </p>
+
+        <div class="mt-4">
+          <div class="feature mb-3">
+            <div class="d-flex gap-3">
+              <i class="bi bi-calendar-check"></i>
+              <div>
+                <h6 class="fw-bold mb-1">Booking Help</h6>
+                <div style="color: var(--lux-muted);">
+                  Learn how to reserve rooms and check availability.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature mb-3">
+            <div class="d-flex gap-3">
+              <i class="bi bi-credit-card"></i>
+              <div>
+                <h6 class="fw-bold mb-1">Payment Support</h6>
+                <div style="color: var(--lux-muted);">
+                  Get help with payment steps and common issues.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature">
+            <div class="d-flex gap-3">
+              <i class="bi bi-arrow-repeat"></i>
+              <div>
+                <h6 class="fw-bold mb-1">Cancellation Info</h6>
+                <div style="color: var(--lux-muted);">
+                  Understand cancellation and reservation update options.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="help-box">
+          <label for="helpQuestion" class="form-label fw-semibold mb-2">Ask our assistant</label>
+          <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text bg-dark text-white border-0">
+              <i class="bi bi-chat-dots"></i>
+            </span>
+            <input
+              type="text"
+              id="helpQuestion"
+              class="form-control border-0"
+              placeholder="Example: How do I cancel my reservation?"
+              onkeypress="if(event.key==='Enter'){ askHelp(); }"
+            >
+            <button type="button" class="btn btn-gold px-4" onclick="askHelp(event)">
+    Ask
+</button>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <button type="button" class="btn btn-sm btn-outline-light" onclick="setQuestion('How do I reserve a room?')">How to reserve a room?</button>
+            <button type="button" class="btn btn-sm btn-outline-light" onclick="setQuestion('What payment methods are available?')">Payment methods</button>
+            <button type="button" class="btn btn-sm btn-outline-light" onclick="setQuestion('Can I cancel my booking?')">Cancel booking</button>
+            <button type="button" class="btn btn-sm btn-outline-light" onclick="setQuestion('What time is check-in and check-out?')">Check-in / Check-out</button>
+          </div>
+
+          <div id="helpResponse" class="help-response" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 700, once: true });
+  
+  function setQuestion(text) {
+	    document.getElementById("helpQuestion").value = text;
+	    document.getElementById("helpQuestion").focus();
+	}
+
+	function askHelp(event) {
+	    if (event) {
+	        event.preventDefault();
+	    }
+
+	    const question = document.getElementById("helpQuestion").value.trim();
+	    const responseBox = document.getElementById("helpResponse");
+
+	    if (!question) {
+	        responseBox.style.display = "block";
+	        responseBox.innerHTML = "Please enter your question.";
+	        return false;
+	    }
+
+	    responseBox.style.display = "block";
+	    responseBox.innerHTML = "Thinking...";
+
+	    fetch("<%= request.getContextPath() %>/help", {
+	        method: "POST",
+	        headers: {
+	            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+	        },
+	        body: "question=" + encodeURIComponent(question)
+	    })
+	    .then(response => response.text())
+	    .then(data => {
+	        responseBox.innerHTML = data;
+	    })
+	    .catch(error => {
+	        responseBox.innerHTML = "Sorry, something went wrong while getting a response.";
+	        console.error(error);
+	    });
+
+	    return false;
+	}
 </script>
+
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

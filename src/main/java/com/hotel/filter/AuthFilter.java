@@ -24,7 +24,8 @@ public class AuthFilter implements Filter {
                 path.equals("/home") || path.equals("/") ||
                 path.startsWith("/assets/") ||
                 path.equals("/rooms") || path.equals("/availability") ||
-                path.equals("/login") || path.equals("/register");
+                path.equals("/login") || path.equals("/register") ||
+                path.equals("/help");
 
         if (isPublic) {
             chain.doFilter(request, response);
