@@ -11,14 +11,15 @@ import java.util.List;
 
 public class UserDAO {
 
-    public boolean createUser(String fullName, String email, String phone, String passwordHash) {
-        String sql = "INSERT INTO users(full_name,email,phone,password_hash,role,status) VALUES(?,?,?,?, 'USER','ACTIVE')";
+    public boolean createUser(String fullName, String email, String phone,String address, String passwordHash) {
+        String sql = "INSERT INTO users(full_name,email,phone,address,password_hash,role,status) VALUES(?,?,?,?,?, 'USER','ACTIVE')";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, fullName);
             ps.setString(2, email);
             ps.setString(3, phone);
-            ps.setString(4, passwordHash);
+            ps.setString(4, address);
+            ps.setString(5, passwordHash);
             return ps.executeUpdate() == 1;
         } catch (Exception e) {
             // duplicate email will throw - treat as false
@@ -27,7 +28,7 @@ public class UserDAO {
     }
 
     public User login(String email, String passwordHash) {
-        String sql = "SELECT id, full_name, email, phone, role FROM users " +
+        String sql = "SELECT id, full_name, email, phone,address, role FROM users " +
                      "WHERE email=? AND password_hash=? AND status='ACTIVE'";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -40,6 +41,7 @@ public class UserDAO {
                         rs.getString("full_name"),
                         rs.getString("email"),
                         rs.getString("phone"),
+                        rs.getString("address"),
                         rs.getString("role")
                 );
             }
@@ -49,7 +51,7 @@ public class UserDAO {
     }
     
     public List<User> getAllUsers() {
-        String sql = "SELECT id, full_name, email, phone, role FROM users ORDER BY id DESC";
+        String sql = "SELECT id, full_name, email, phone,address, role FROM users ORDER BY id DESC";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -60,6 +62,7 @@ public class UserDAO {
                         rs.getString("full_name"),
                         rs.getString("email"),
                         rs.getString("phone"),
+                        rs.getString("address"),
                         rs.getString("role")
                 ));
             }

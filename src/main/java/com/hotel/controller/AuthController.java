@@ -42,8 +42,9 @@ public class AuthController extends HttpServlet {
             String email = req.getParameter("email");
             String phone = req.getParameter("phone");
             String password = req.getParameter("password");
+            String address = req.getParameter("address");
 
-            boolean ok = userDAO.createUser(fullName, email, phone, PasswordUtil.sha256(password));
+            boolean ok = userDAO.createUser(fullName, email, phone,address, PasswordUtil.sha256(password));
             if (!ok) {
                 req.setAttribute("error", "Registration failed. Email may already exist.");
                 req.getRequestDispatcher("/WEB-INF/views/public/register.jsp").forward(req, resp);

@@ -1,25 +1,31 @@
 package com.hotel.controller;
 
+import com.hotel.dao.PaymentDAO;
 import com.hotel.dao.ReservationDAO;
 import com.hotel.dao.RoomDAO;
-
+import com.hotel.model.Reservation;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 @WebServlet(urlPatterns = {
         "/staff/reservations",
         "/staff/reservation/update",
-        "/staff/reservation/cancel"
+        "/staff/reservation/cancel",
+        "/staff/reservation/pay-balance"
 })
 public class StaffReservationController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
     private final ReservationDAO reservationDAO = new ReservationDAO();
     private final RoomDAO roomDAO = new RoomDAO();
+    
+    private PaymentDAO paymentDAO = new PaymentDAO();
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,6 +43,7 @@ public class StaffReservationController extends HttpServlet {
         if ("/staff/reservation/cancel".equals(path)) {
             int reservationId = Integer.parseInt(req.getParameter("reservationId"));
             reservationDAO.cancelByStaffAdmin(reservationId);
+
             resp.sendRedirect(req.getContextPath() + "/staff/reservations?done=1");
             return;
         }
@@ -51,5 +58,46 @@ public class StaffReservationController extends HttpServlet {
             boolean ok = reservationDAO.updateReservationWithLock(reservationId, roomId, checkIn, checkOut, guests);
             resp.sendRedirect(req.getContextPath() + "/staff/reservations?updated=" + (ok ? "1" : "0"));
         }
+        
+        
+        if ("/staff/reservation/pay-balance".equals(req.getServletPath())) {
+        	
+        	
+		    int reservationId = Integer.parseInt(req.getParameter("reservationId"));
+		
+		    Reservation reservation = reservationDAO.findById(reservationId);
+		    if (reservation == null) {
+		        resp.sendRedirect(req.getContextPath() + "/staff/reservations?balance=0");
+		        return;
+		    }
+		
+		    if (!"ADVANCE_PAID".equals(reservation.getStatus())) {
+		        resp.sendRedirect(req.getContextPath() + "/staff/reservations?balance=0");
+		        return;
+		    }
+		
+		    BigDecimal totalPaid = paymentDAO.getTotalPaidAmountByReservation(reservationId);
+		    BigDecimal balance = reservation.getTotalAmount().subtract(totalPaid);
+		
+		    if (balance.compareTo(BigDecimal.ZERO) <= 0) {
+		        resp.sendRedirect(req.getContextPath() + "/staff/reservations?balance=0");
+		        return;
+		    }
+		
+		    int paymentId = paymentDAO.createPaidCashPayment(
+		        reservationId,
+		        balance,
+		        "CASHIER-" + reservationId + "-" + System.currentTimeMillis()
+		    );
+		
+		    if (paymentId > 0) {
+		        reservationDAO.updatePaymentStatus(reservationId, reservation.getUserId(), "PAID");
+		        resp.sendRedirect(req.getContextPath() + "/staff/reservations?balance=1");
+		    } else {
+		        resp.sendRedirect(req.getContextPath() + "/staff/reservations?balance=0");
+		    }
+		
+		    return;
+		}
     }
 }

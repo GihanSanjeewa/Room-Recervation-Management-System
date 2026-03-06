@@ -60,5 +60,21 @@ public class ReservationService {
         }
     }
 
+    public double calculateTotal(int nights, double pricePerNight) {
+        return nights * pricePerNight;
+    }
+
+    public boolean validateDates(LocalDate checkIn, LocalDate checkOut) {
+        if (checkIn == null || checkOut == null) {
+            throw new IllegalArgumentException("Dates cannot be null");
+        }
+
+        if (!checkOut.isAfter(checkIn)) {
+            throw new IllegalArgumentException("Check-out must be after check-in");
+        }
+
+        return true;
+    }
+
 
 }

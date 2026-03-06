@@ -24,11 +24,16 @@ public class PaymentDAO {
             ps.setString(5, reference);
 
             int rows = ps.executeUpdate();
-            if (rows != 1) return 0;
+            if (rows != 1) {
+                return 0;
+            }
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) return rs.getInt(1);
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
             }
+
             return 0;
 
         } catch (Exception e) {
@@ -45,7 +50,9 @@ public class PaymentDAO {
             ps.setInt(1, reservationId);
 
             try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) return null;
+                if (!rs.next()) {
+                    return null;
+                }
 
                 Payment p = new Payment();
                 p.setId(rs.getInt("id"));
@@ -55,9 +62,34 @@ public class PaymentDAO {
                 p.setStatus(rs.getString("status"));
                 p.setReference(rs.getString("reference"));
 
-                // only if you have these columns in table
-                // p.setPaidAt(rs.getTimestamp("paid_at"));
-                // p.setCreatedAt(rs.getTimestamp("created_at"));
+                return p;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Payment findById(int paymentId) {
+        String sql = "SELECT * FROM payments WHERE id=?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, paymentId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+
+                Payment p = new Payment();
+                p.setId(rs.getInt("id"));
+                p.setReservationId(rs.getInt("reservation_id"));
+                p.setAmount(rs.getBigDecimal("amount"));
+                p.setMethod(rs.getString("method"));
+                p.setStatus(rs.getString("status"));
+                p.setReference(rs.getString("reference"));
 
                 return p;
             }
@@ -77,8 +109,8 @@ public class PaymentDAO {
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, status);
-            ps.setString(2, reference);  // can be null
-            ps.setString(3, status);     // used in CASE WHEN
+            ps.setString(2, reference);
+            ps.setString(3, status);
             ps.setInt(4, paymentId);
 
             return ps.executeUpdate() == 1;
@@ -97,8 +129,72 @@ public class PaymentDAO {
             ps.setInt(1, paymentId);
 
             try (ResultSet rs = ps.executeQuery()) {
-                return rs.next() ? rs.getInt(1) : 0;
+                return rs.next() ? rs.getInt("reservation_id") : 0;
             }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public BigDecimal getTotalPaidAmountByReservation(int reservationId) {
+        String sql = "SELECT COALESCE(SUM(amount), 0) AS total_paid " +
+                     "FROM payments " +
+                     "WHERE reservation_id = ? AND status = 'PAID'";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, reservationId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBigDecimal("total_paid");
+                }
+                return BigDecimal.ZERO;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public int createPaidCashPayment(int reservationId, BigDecimal amount, String reference) {
+        String sql = "INSERT INTO payments(reservation_id, amount, method, status, reference, paid_at) " +
+                     "VALUES(?, ?, 'CASH', 'PAID', ?, NOW())";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setInt(1, reservationId);
+            ps.setBigDecimal(2, amount);
+            ps.setString(3, reference);
+
+            int rows = ps.executeUpdate();
+            if (rows != 1) {
+                return 0;
+            }
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+
+            return 0;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public boolean markPaymentAsPaid(int paymentId) {
+        String sql = "UPDATE payments SET status='PAID', paid_at=NOW() WHERE id=?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, paymentId);
+            return ps.executeUpdate() > 0;
 
         } catch (Exception e) {
             throw new RuntimeException(e);

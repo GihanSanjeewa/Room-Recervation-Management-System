@@ -36,11 +36,24 @@ public class ReservationDAO {
     }
 
     public List<Reservation> getReservationsByUser(int userId) {
-        String sql =
-            "SELECT res.*, r.room_number, r.type AS room_type " +
-            "FROM reservations res " +
-            "JOIN rooms r ON r.id=res.room_id " +
-            "WHERE res.user_id=? ORDER BY res.id DESC";
+    	 String sql =
+    			 "SELECT " +
+    		    		    "res.*, " +
+    		    		    "r.room_number, " +
+    		    		    "r.type AS room_type, " +
+    		    		    "u.id AS user_id, " +
+    		    		    "u.full_name, " +
+    		    		    "u.email, " +
+    		    		    "u.phone, " +
+    		    		    "u.address, " +
+    		    		    "u.role, " +
+    		    		    "u.status AS user_status " +
+    		    		    "FROM reservations res " +
+    		    		    "JOIN rooms r ON r.id = res.room_id " +
+    		    		    "JOIN users u ON u.id = res.user_id " +
+    		    		    
+    		        "WHERE res.user_id = ? " +
+    		        "ORDER BY res.id DESC";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, userId);
@@ -67,11 +80,22 @@ public class ReservationDAO {
     }
 
     public List<Reservation> getAllReservations() {
-        String sql =
-            "SELECT res.*, r.room_number, r.type AS room_type " +
-            "FROM reservations res " +
-            "JOIN rooms r ON r.id=res.room_id " +
-            "ORDER BY res.id DESC";
+    	String sql =
+    		    "SELECT " +
+    		    "res.*, " +
+    		    "r.room_number, " +
+    		    "r.type AS room_type, " +
+    		    "u.id AS user_id, " +
+    		    "u.full_name, " +
+    		    "u.email, " +
+    		    "u.phone, " +
+    		    "u.address, " +
+    		    "u.role, " +
+    		    "u.status AS user_status " +
+    		    "FROM reservations res " +
+    		    "JOIN rooms r ON r.id = res.room_id " +
+    		    "JOIN users u ON u.id = res.user_id " +
+    		    "ORDER BY res.id DESC";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -86,6 +110,8 @@ public class ReservationDAO {
     private Reservation map(ResultSet rs) throws Exception {
         Reservation r = new Reservation();
         r.setId(rs.getInt("id"));
+        r.setFullName(rs.getString("full_name"));
+        r.setPhone(rs.getString("phone"));
         r.setReservationCode(rs.getString("reservation_code"));
         r.setUserId(rs.getInt("user_id"));
         r.setRoomId(rs.getInt("room_id"));
@@ -103,6 +129,7 @@ public class ReservationDAO {
         String sql = "INSERT INTO reservations(reservation_code,user_id,room_id,check_in,check_out,guests,status,total_amount) " +
                      "VALUES(?,?,?,?,?,?,?,?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
+        	
             ps.setString(1, r.getReservationCode());
             ps.setInt(2, r.getUserId());
             ps.setInt(3, r.getRoomId());
@@ -117,8 +144,21 @@ public class ReservationDAO {
     
     public Reservation findById(int id) {
         String sql =
-            "SELECT res.*, r.room_number, r.type AS room_type " +
-            "FROM reservations res JOIN rooms r ON r.id=res.room_id " +
+        		"SELECT " +
+            		    "res.*, " +
+            		    "r.room_number, " +
+            		    "r.type AS room_type, " +
+            		    "u.id AS user_id, " +
+            		    "u.full_name, " +
+            		    "u.email, " +
+            		    "u.phone, " +
+            		    "u.address, " +
+            		    "u.role, " +
+            		    "u.status AS user_status " +
+            		    "FROM reservations res " +
+            		    "JOIN rooms r ON r.id = res.room_id " +
+            		    "JOIN users u ON u.id = res.user_id " +
+           
             "WHERE res.id=?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {

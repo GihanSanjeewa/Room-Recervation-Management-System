@@ -56,6 +56,10 @@
           <input class="form-control auth-input" name="phone">
         </div>
         <div class="mb-3">
+          <label class="form-label" style="color:rgb(4,2,0);font-weight:600;">Address</label>
+          <input class="form-control auth-input" name="address">
+        </div>
+        <div class="mb-3">
           <label class="form-label" style="color:rgb(4,2,0);font-weight:600;">Password</label>
           <input class="form-control auth-input" type="password" name="password" required>
         </div>

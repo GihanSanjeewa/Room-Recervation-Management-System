@@ -18,6 +18,36 @@ public class Reservation {
     private String roomNumber;
     private String roomType;
 
+    private String fullName;
+    private String phone;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+    
+    
+    private BigDecimal remainingAmount;
+
+    public BigDecimal getRemainingAmount() {
+        return remainingAmount;
+    }
+
+    public void setRemainingAmount(BigDecimal remainingAmount) {
+        this.remainingAmount = remainingAmount;
+    }
+    
     public int getId() { return id; }
     public String getReservationCode() { return reservationCode; }
     public int getUserId() { return userId; }
