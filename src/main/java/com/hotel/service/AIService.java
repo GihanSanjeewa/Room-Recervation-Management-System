@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 public class AIService {
 
     // Better to move this to environment variable or config file
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
     private static final String API_URL = "https://api.anthropic.com/v1/messages";
 
     public String getHelpResponse(String userQuestion) throws IOException {

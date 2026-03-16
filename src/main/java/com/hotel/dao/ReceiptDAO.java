@@ -13,18 +13,18 @@ public class ReceiptDAO {
         String sql =
             "SELECT " +
             "p.id AS payment_id, " +
-            "CONCAT('RCPT-', LPAD(p.id, 6, '0')) AS receipt_no, " +
+            "COALESCE(p.receipt_no, CONCAT('RCPT-', LPAD(p.id, 6, '0'))) AS receipt_no, " +
             "u.full_name, " +
             "u.email, " +
             "r.reservation_code, " +
             "rm.room_number, " +
             "rm.type AS room_type, " +
-            "r.check_in_date, " +
-            "r.check_out_date, " +
+            "r.check_in AS check_in_date, " +
+            "r.check_out AS check_out_date, " +
             "p.method AS payment_method, " +
             "p.amount AS amount_paid, " +
             "p.status AS payment_status, " +
-            "p.created_at AS paid_at " +
+            "COALESCE(p.paid_at, p.created_at) AS paid_at " +
             "FROM payments p " +
             "JOIN reservations r ON r.id = p.reservation_id " +
             "JOIN users u ON u.id = r.user_id " +
